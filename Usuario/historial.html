@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial y Reclamos</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .claims-container {
+            padding: 20px;
+        }
+        .claim-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .claim-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .claim-status {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .status-approved { background: #c6f6d5; color: #22543d; }
+        .status-pending { background: #feebc8; color: #9c4221; }
+        .status-rejected { background: #fed7d7; color: #9b2c2c; }
+        .new-claim-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin: 20px;
+            cursor: pointer;
+        }
+        .notification {
+            background: #f7fafc;
+            border-left: 3px solid #4299e1;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="user-header">
+        <h2>Polix Insurance - Historial</h2>
+        <nav class="user-nav">
+            <a href="informacionSeguro.html">Mi Seguro</a>
+            <a href="estadoCuenta.html">Estado de Cuenta</a>
+            <a href="historial.html">Historial</a>
+            <a href="../index.html">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div class="claims-container">
+        <button class="new-claim-btn">+ Nuevo Reclamo</button>
+        
+        <div class="claim-item">
+            <div class="claim-header">
+                <h3>Consulta Cardiológica</h3>
+                <span class="claim-status status-approved">Aprobado</span>
+            </div>
+            <p><strong>Fecha:</strong> 20/05/2023</p>
+            <p><strong>Monto reclamado:</strong> $350.00</p>
+            <p><strong>Monto aprobado:</strong> $300.00</p>
+            <div class="notification">
+                <strong>Notificación:</strong> Tu reclamo fue aprobado parcialmente. El copago de $50 corresponde a medicamentos no cubiertos.
+            </div>
+        </div>
+        
+        <div class="claim-item">
+            <div class="claim-header">
+                <h3>Análisis de Laboratorio</h3>
+                <span class="claim-status status-pending">En Proceso</span>
+            </div>
+            <p><strong>Fecha:</strong> 10/07/2023</p>
+            <p><strong>Monto reclamado:</strong> $180.00</p>
+            <div class="notification">
+                <strong>Notificación:</strong> Estamos verificando tu reclamo. Te notificaremos en un máximo de 5 días hábiles.
+            </div>
+        </div>
+        
+        <div class="claim-item">
+            <div class="claim-header">
+                <h3>Cirugía Ambulatoria</h3>
+                <span class="claim-status status-rejected">Rechazado</span>
+            </div>
+            <p><strong>Fecha:</strong> 15/04/2023</p>
+            <p><strong>Monto reclamado:</strong> $1,200.00</p>
+            <div class="notification">
+                <strong>Notificación:</strong> Procedimiento no autorizado previamente. Por favor contacta a tu asesor para más información.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

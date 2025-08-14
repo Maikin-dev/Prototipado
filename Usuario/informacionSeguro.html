@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Seguro</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .user-header {
+            background: #4299e1;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .user-nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .info-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .policy-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .status-active { background: #c6f6d5; color: #22543d; }
+        .coverage-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+        .download-btn {
+            background: #4299e1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .warning-banner {
+            background: #fffaf0;
+            border-left: 4px solid #ed8936;
+            padding: 15px;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="user-header">
+        <h2>Polix Insurance - Mi Seguro</h2>
+        <nav class="user-nav">
+            <a href="informacionSeguro.html">Mi Seguro</a>
+            <a href="estadoCuenta.html">Estado de Cuenta</a>
+            <a href="historial.html">Historial</a>
+            <a href="../index.html">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div class="info-card">
+        <h2>Información de tu Póliza</h2>
+        <p><strong>Tipo de Póliza:</strong> Seguro Médico Premium</p>
+        <p><strong>Número de Póliza:</strong> POL-2023-001</p>
+        <p><strong>Estado:</strong> <span class="policy-status status-active">Activo</span></p>
+        <p><strong>Fecha de Inicio:</strong> 15/03/2023</p>
+        <p><strong>Fecha de Vencimiento:</strong> 15/03/2024</p>
+        
+        <h3 style="margin-top: 20px;">Coberturas Incluidas:</h3>
+        <ul class="coverage-list">
+            <li>Consultas médicas ilimitadas</li>
+            <li>Hospitalización hasta $15,000</li>
+            <li>Medicamentos con copago del 20%</li>
+            <li>Emergencias 24/7</li>
+        </ul>
+        
+        <button class="download-btn">Descargar Póliza en PDF</button>
+    </div>
+
+    <div class="warning-banner">
+        <h3>¡Atención!</h3>
+        <p>Tu póliza vencerá en 45 días. Contacta a tu asesor para renovarla.</p>
+    </div>
+</body>
+</html>

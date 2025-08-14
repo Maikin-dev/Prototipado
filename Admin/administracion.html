@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Pólizas</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .policy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .policy-list, .policy-stats {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .policy-item {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .policy-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .new-policy-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .stat-item {
+            margin: 15px 0;
+        }
+        .stat-bar {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+        .stat-fill {
+            height: 100%;
+            border-radius: 5px;
+            background: #4299e1;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <h2>Polix Insurance - Administración de Pólizas</h2>
+        <nav class="admin-nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="gestionUsuarios.html">Usuarios</a>
+            <a href="administracion.html">Pólizas</a>
+            <a href="../index.html">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div class="policy-grid">
+        <div class="policy-list">
+            <h2>Pólizas Disponibles</h2>
+            <div class="policy-item">
+                <div>
+                    <h3>Seguro Médico Básico</h3>
+                    <p>Cobertura: $5,000 - Duración: 1 año</p>
+                    <p>Precio: $500/anual</p>
+                </div>
+                <div class="policy-actions">
+                    <button class="action-btn btn-edit">Editar</button>
+                </div>
+            </div>
+            <div class="policy-item">
+                <div>
+                    <h3>Seguro Médico Premium</h3>
+                    <p>Cobertura: $15,000 - Duración: 1 año</p>
+                    <p>Precio: $1,200/anual</p>
+                </div>
+                <div class="policy-actions">
+                    <button class="action-btn btn-edit">Editar</button>
+                </div>
+            </div>
+            <button class="new-policy-btn">+ Crear Nueva Póliza</button>
+        </div>
+
+        <div class="policy-stats">
+            <h2>Estadísticas de Uso</h2>
+            <div class="stat-item">
+                <div>Seguro Médico Básico</div>
+                <div>450 asegurados (36%)</div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 36%;"></div>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div>Seguro Médico Premium</div>
+                <div>210 asegurados (17%)</div>
+                <div class="stat-bar">
+                    <div class="stat-fill" style="width: 17%;"></div>
+                </div>
+            </div>
+            <h3 style="margin-top: 30px;">Reclamos por Póliza</h3>
+            <div class="stat-item">
+                <div>Seguro Básico: 45 reclamos</div>
+                <div>Seguro Premium: 12 reclamos</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

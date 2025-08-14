@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estado de Cuenta</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .payment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .payment-table th, .payment-table td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+        .payment-table th {
+            background-color: #f7fafc;
+        }
+        .status-paid { color: #48bb78; }
+        .status-pending { color: #ed8936; }
+        .payment-summary {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .chart-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(#48bb78 75%, #e2e8f0 0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            color: #4a5568;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .payment-btn {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="user-header">
+        <h2>Polix Insurance - Estado de Cuenta</h2>
+        <nav class="user-nav">
+            <a href="informacionSeguro.html">Mi Seguro</a>
+            <a href="estadoCuenta.html">Estado de Cuenta</a>
+            <a href="historial.html">Historial</a>
+            <a href="../index.html">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div class="payment-grid">
+        <div>
+            <table class="payment-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Concepto</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>15/03/2023</td>
+                        <td>Pago inicial</td>
+                        <td>$1,200.00</td>
+                        <td class="status-paid">Pagado</td>
+                        <td><button>Factura</button></td>
+                    </tr>
+                    <tr>
+                        <td>15/09/2023</td>
+                        <td>Segunda cuota</td>
+                        <td>$1,200.00</td>
+                        <td class="status-pending">Pendiente</td>
+                        <td><button>Pagar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="payment-summary">
+            <h3>Resumen de Pagos</h3>
+            <div class="chart-circle">
+                75%
+            </div>
+            <p style="text-align: center;">Porcentaje pagado</p>
+            
+            <div style="margin-top: 30px;">
+                <p><strong>Total pagado:</strong> $1,200.00</p>
+                <p><strong>Saldo pendiente:</strong> $1,200.00</p>
+                <p><strong>Próximo vencimiento:</strong> 15/09/2023</p>
+            </div>
+            
+            <button class="payment-btn">Realizar Pago en Línea</button>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .admin-header {
+            background: #4a5568;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .admin-nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .data-table th {
+            background-color: #f2f2f2;
+        }
+        .status-active { color: green; }
+        .status-expired { color: red; }
+        .status-suspended { color: orange; }
+        .action-btn {
+            padding: 5px 10px;
+            margin: 0 2px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-edit { background: #4299e1; color: white; }
+        .btn-delete { background: #f56565; color: white; }
+        .btn-suspend { background: #ed8936; color: white; }
+        .btn-renew { background: #48bb78; color: white; }
+        .search-export {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <h2>Polix Insurance - Gestión de Usuarios</h2>
+        <nav class="admin-nav">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="gestionUsuarios.html">Usuarios</a>
+            <a href="administracion.html">Pólizas</a>
+            <a href="../index.html">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="search-export">
+            <div>
+                <input type="text" placeholder="Buscar...">
+                <select>
+                    <option>Filtrar por estado</option>
+                    <option>Activo</option>
+                    <option>Vencido</option>
+                    <option>Suspendido</option>
+                </select>
+                <button>Filtrar</button>
+            </div>
+            <div>
+                <button>Exportar Excel</button>
+                <button>Exportar PDF</button>
+            </div>
+        </div>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>N° Póliza</th>
+                    <th>Estado</th>
+                    <th>Fecha Alta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Juan Pérez</td>
+                    <td>POL-2023-001</td>
+                    <td class="status-active">Activo</td>
+                    <td>15/03/2023</td>
+                    <td>
+                        <button class="action-btn btn-edit">Editar</button>
+                        <button class="action-btn btn-suspend">Suspender</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>María García</td>
+                    <td>POL-2022-045</td>
+                    <td class="status-expired">Vencido</td>
+                    <td>22/07/2022</td>
+                    <td>
+                        <button class="action-btn btn-edit">Editar</button>
+                        <button class="action-btn btn-renew">Renovar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Carlos López</td>
+                    <td>POL-2023-078</td>
+                    <td class="status-suspended">Suspendido</td>
+                    <td>10/01/2023</td>
+                    <td>
+                        <button class="action-btn btn-edit">Editar</button>
+                        <button class="action-btn btn-delete">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -2,6 +2,7 @@
 class CleanBankingLoginForm {
     constructor() {
         this.form = document.getElementById('loginForm');
+        this.memberIdInput = document.getElementById('memberId');
         this.emailInput = document.getElementById('email');
         this.passwordInput = document.getElementById('password');
         this.passwordToggle = document.getElementById('passwordToggle');
@@ -18,8 +19,10 @@ class CleanBankingLoginForm {
     
     bindEvents() {
         this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+        this.memberIdInput.addEventListener('blur', () => this.validateMemberId());
         this.emailInput.addEventListener('blur', () => this.validateEmail());
         this.passwordInput.addEventListener('blur', () => this.validatePassword());
+        this.memberIdInput.addEventListener('input', () => this.clearError('memberId'));
         this.emailInput.addEventListener('input', () => this.clearError('email'));
         this.passwordInput.addEventListener('input', () => this.clearError('password'));
     }
@@ -31,6 +34,23 @@ class CleanBankingLoginForm {
             
             this.passwordToggle.classList.toggle('show-password', type === 'text');
         });
+    }
+    
+    validateMemberId() {
+        const memberId = this.memberIdInput.value.trim();
+        
+        if (!memberId) {
+            this.showError('memberId', 'Member ID is required');
+            return false;
+        }
+        
+        if (memberId.length < 6) {
+            this.showError('memberId', 'Member ID must be at least 6 characters');
+            return false;
+        }
+        
+        this.clearError('memberId');
+        return true;
     }
     
     validateEmail() {
@@ -91,10 +111,11 @@ class CleanBankingLoginForm {
     async handleSubmit(e) {
         e.preventDefault();
         
+        const isMemberIdValid = this.validateMemberId();
         const isEmailValid = this.validateEmail();
         const isPasswordValid = this.validatePassword();
         
-        if (!isEmailValid || !isPasswordValid) {
+        if (!isMemberIdValid || !isEmailValid || !isPasswordValid) {
             return;
         }
         
@@ -126,6 +147,7 @@ class CleanBankingLoginForm {
         setTimeout(() => {
             this.form.style.display = 'none';
             document.querySelector('.security-notice').style.display = 'none';
+            document.querySelector('.admin-link-container').style.display = 'none';
             
             // Show success message
             this.successMessage.classList.add('show');
