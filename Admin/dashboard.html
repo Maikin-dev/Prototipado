@@ -3,106 +3,556 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Dashboard - Polix Insurance Admin</title>
+    <link rel="stylesheet" href="../css/style.css">
     <style>
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            padding: 20px;
+        body {
+            background: url('../css/images/SeguroFondoAdministrador.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: block;
+            align-items: unset;
+            justify-content: unset;
+            min-height: 100vh;
         }
-        .card {
-            background: white;
+
+        body::before {
+            background-color: rgba(240, 244, 248, 0.95);
+        }
+
+        /* Header */
+        .admin-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-admin {
+            max-width: 40px;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .header-title h1 {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .header-title p {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8fafc;
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .card h3 {
-            margin-top: 0;
-            color: #4a5568;
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: #6366F1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
         }
-        .card .value {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        .positive { color: #48bb78; }
-        .negative { color: #f56565; }
-        .chart-container {
-            grid-column: span 2;
-            height: 300px;
-            background: #f7fafc;
+
+        .logout-btn {
+            background: none;
             border: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: #64748b;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 24px;
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
+        }
+
+        .nav-tab {
+            padding: 16px 24px;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .nav-tab.active {
+            color: #6366F1;
+            border-bottom-color: #6366F1;
+        }
+
+        .nav-tab:hover {
+            color: #6366F1;
+            background: #f8fafc;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .page-title {
+            margin-bottom: 32px;
+        }
+
+        .page-title h2 {
+            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-color, #6366F1);
+        }
+
+        .stat-card.success::before { --accent-color: #10B981; }
+        .stat-card.warning::before { --accent-color: #F59E0B; }
+        .stat-card.danger::before { --accent-color: #EF4444; }
+        .stat-card.info::before { --accent-color: #3B82F6; }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .stat-icon.success { background: #10B981; }
+        .stat-icon.warning { background: #F59E0B; }
+        .stat-icon.danger { background: #EF4444; }
+        .stat-icon.info { background: #3B82F6; }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .stat-change.positive { color: #10B981; }
+        .stat-change.negative { color: #EF4444; }
+
+        /* Charts Section */
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .chart-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+        }
+
+        .chart-header {
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            color: #1e293b;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .chart-subtitle {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-        .quick-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .quick-btn {
-            padding: 10px 15px;
-            background: #4299e1;
             color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)" /></svg>');
+        }
+
+        .donut-chart {
+            height: 200px;
+            background: conic-gradient(#6366F1 0deg 130deg, #10B981 130deg 220deg, #F59E0B 220deg 290deg, #EF4444 290deg 360deg);
+            border-radius: 50%;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .donut-chart::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+        }
+
+        .actions-title {
+            color: #1e293b;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .action-buttons {
+            display: grid;
+            gap: 12px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: #6366F1;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .action-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 24px 16px;
+            }
+
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                padding: 0 16px;
+            }
+
+            .nav-content {
+                padding: 0 16px;
+                overflow-x: auto;
+            }
+
+            .user-info span {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="admin-header">
-        <h2>Polix Insurance - Dashboard</h2>
-        <nav class="admin-nav">
-            <a href="dashboard.html">Dashboard</a>
-            <a href="gestionUsuarios.html">Usuarios</a>
-            <a href="administracion.html">Pólizas</a>
-            <a href="../index.html">Cerrar Sesión</a>
-        </nav>
-    </header>
-
-    <div class="dashboard">
-        <div class="card">
-            <h3>Asegurados Activos</h3>
-            <div class="value">1,248</div>
-            <div>+12 este mes</div>
-        </div>
-        <div class="card">
-            <h3>Nuevos Asegurados</h3>
-            <div class="value">84</div>
-            <div>+5% vs mes anterior</div>
-        </div>
-        <div class="card">
-            <h3>Balance Financiero</h3>
-            <div class="value positive">$1.2M</div>
-            <div>Superávit</div>
-        </div>
-        <div class="card">
-            <h3>Pólizas por Vencer</h3>
-            <div class="value">37</div>
-            <div>en los próximos 30 días</div>
-        </div>
-
-        <div class="chart-container">
-            [Gráfico de Crecimiento Mensual]
-        </div>
-        <div class="chart-container">
-            [Distribución por Tipo de Seguro]
-        </div>
-
-        <div class="card" style="grid-column: span 4;">
-            <h3>Acciones Rápidas</h3>
-            <div class="quick-actions">
-                <button class="quick-btn">+ Nuevo Asegurado</button>
-                <button class="quick-btn">Generar Reporte</button>
-                <button class="quick-btn">Ver Estadísticas</button>
-                <button class="quick-btn">Configuración</button>
+        <div class="header-content">
+            <div class="header-left">
+                <img src="../css/images/Logo.avif" alt="Polix Insurance Logo" class="logo-admin">
+                <div class="header-title">
+                    <h1>Panel Administrativo</h1>
+                    <p>Gestión de Seguros</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <span>Admin User</span>
+                </div>
+                <a href="../index.html" class="logout-btn">Cerrar Sesión</a>
             </div>
         </div>
-    </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <div class="nav-content">
+            <a href="dashboard.html" class="nav-tab active">Dashboard</a>
+            <a href="gestionUsuarios.html" class="nav-tab">Gestión Usuarios</a>
+            <a href="administracion.html" class="nav-tab">Administración</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-title">
+            <h2>Dashboard General</h2>
+            <p>Resumen ejecutivo y métricas principales de la aseguradora</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card success">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">2,847</div>
+                        <div class="stat-label">Asegurados Activos</div>
+                        <div class="stat-change positive">
+                            <span>↗</span> +12% vs mes anterior
+                        </div>
+                    </div>
+                    <div class="stat-icon success">👥</div>
+                </div>
+            </div>
+
+            <div class="stat-card info">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Nuevos Asegurados</div>
+                        <div class="stat-change positive">
+                            <span>↗</span> +8% este mes
+                        </div>
+                    </div>
+                    <div class="stat-icon info">📈</div>
+                </div>
+            </div>
+
+            <div class="stat-card warning">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">$428K</div>
+                        <div class="stat-label">Balance Financiero</div>
+                        <div class="stat-change positive">
+                            <span>↗</span> +5.2% superávit
+                        </div>
+                    </div>
+                    <div class="stat-icon warning">💰</div>
+                </div>
+            </div>
+
+            <div class="stat-card danger">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Pólizas por Vencer</div>
+                        <div class="stat-change negative">
+                            <span>⚠️</span> Próximos 30 días
+                        </div>
+                    </div>
+                    <div class="stat-icon danger">📋</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">Crecimiento Mensual de Asegurados</div>
+                    <div class="chart-subtitle">Últimos 12 meses - Tendencia positiva</div>
+                </div>
+                <div class="chart-placeholder">
+                    <div style="z-index: 1;">📊 Gráfico de Líneas - Crecimiento Mensual</div>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div class="chart-title">Distribución por Tipo de Seguro</div>
+                    <div class="chart-subtitle">Pólizas activas por categoría</div>
+                </div>
+                <div class="donut-chart"></div>
+                <div style="margin-top: 16px; font-size: 14px; color: #64748b;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <div style="width: 12px; height: 12px; background: #6366F1; border-radius: 2px;"></div>
+                        Vida (45%)
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <div style="width: 12px; height: 12px; background: #10B981; border-radius: 2px;"></div>
+                        Auto (25%)
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <div style="width: 12px; height: 12px; background: #F59E0B; border-radius: 2px;"></div>
+                        Hogar (20%)
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="width: 12px; height: 12px; background: #EF4444; border-radius: 2px;"></div>
+                        Salud (10%)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="actions-title">Accesos Rápidos</div>
+            <div class="action-buttons">
+                <a href="gestionUsuarios.html" class="action-btn">
+                    <div class="action-icon">👤</div>
+                    <span>Agregar Nuevo Asegurado</span>
+                </a>
+                <a href="administracion.html" class="action-btn">
+                    <div class="action-icon">📊</div>
+                    <span>Generar Reporte Financiero</span>
+                </a>
+                <a href="#" class="action-btn">
+                    <div class="action-icon">📧</div>
+                    <span>Enviar Notificaciones de Vencimiento</span>
+                </a>
+                <a href="administracion.html" class="action-btn">
+                    <div class="action-icon">⚙️</div>
+                    <span>Configurar Nuevas Pólizas</span>
+                </a>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

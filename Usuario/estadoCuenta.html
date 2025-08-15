@@ -3,117 +3,760 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estado de Cuenta</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Estado de Cuenta - Polix Insurance</title>
+    <link rel="stylesheet" href="../css/style.css">
     <style>
-        .payment-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            padding: 20px;
+        body {
+            background: url('../css/images/SeguroFondo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: block;
+            align-items: unset;
+            justify-content: unset;
+            min-height: 100vh;
         }
-        .payment-table {
-            width: 100%;
-            border-collapse: collapse;
+
+        body::before {
+            background-color: rgba(255, 255, 255, 0.92);
         }
-        .payment-table th, .payment-table td {
-            border: 1px solid #e2e8f0;
-            padding: 12px;
-            text-align: left;
+
+        /* Header (reusing from informacion_seguro) */
+        .user-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .payment-table th {
-            background-color: #f7fafc;
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .status-paid { color: #48bb78; }
-        .status-pending { color: #ed8936; }
-        .payment-summary {
-            background: white;
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-user {
+            max-width: 40px;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .header-title h1 {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .header-title p {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8fafc;
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        .chart-circle {
-            width: 150px;
-            height: 150px;
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: #6366F1;
             border-radius: 50%;
-            background: conic-gradient(#48bb78 75%, #e2e8f0 0);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 20px auto;
-            color: #4a5568;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-        .payment-btn {
-            background: #48bb78;
             color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 4px;
-            margin-top: 20px;
-            width: 100%;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: #64748b;
+            font-size: 14px;
             cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 24px;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
+        }
+
+        .nav-tab {
+            padding: 16px 24px;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab.active {
+            color: #6366F1;
+            border-bottom-color: #6366F1;
+        }
+
+        .nav-tab:hover {
+            color: #6366F1;
+            background: #f8fafc;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .page-title {
+            margin-bottom: 32px;
+        }
+
+        .page-title h2 {
+            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* Account Summary */
+        .account-summary {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .summary-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+        }
+
+        .summary-header {
+            margin-bottom: 24px;
+        }
+
+        .summary-title {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .summary-subtitle {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .balance-overview {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .balance-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .balance-label {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .balance-amount {
+            color: #1e293b;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .balance-amount.paid {
+            color: #10B981;
+        }
+
+        .balance-amount.pending {
+            color: #F59E0B;
+        }
+
+        /* Payment Chart */
+        .chart-container {
+            position: relative;
+        }
+
+        .payment-chart {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .donut-chart {
+            width: 100%;
+            height: 100%;
+            background: conic-gradient(#10B981 0deg 252deg, #F59E0B 252deg 360deg);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .donut-chart::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .chart-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 1;
+        }
+
+        .chart-percentage {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .chart-label {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-color.paid { background: #10B981; }
+        .legend-color.pending { background: #F59E0B; }
+
+        /* Payments Table */
+        .payments-section {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .table-header {
+            padding: 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+        }
+
+        .table-title {
+            color: #1e293b;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background: white;
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .payments-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .payments-table th,
+        .payments-table td {
+            padding: 16px 24px;
+            text-align: left;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .payments-table th {
+            background: #f8fafc;
+            color: #374151;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .payments-table td {
+            color: #1e293b;
+            font-size: 14px;
+        }
+
+        .payments-table tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Status badges */
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-badge.paid {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge.pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.overdue {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Action buttons */
+        .payment-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .action-btn.pay {
+            background: #6366F1;
+            color: white;
+        }
+
+        .action-btn.download {
+            background: #f1f5f9;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+        }
+
+        .actions-title {
+            color: #1e293b;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .quick-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .quick-action-btn:hover {
+            border-color: #6366F1;
+            background: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .quick-action-btn.primary {
+            background: #6366F1;
+            border-color: #6366F1;
+            color: white;
+        }
+
+        .quick-action-btn.primary:hover {
+            background: #4f46e5;
+        }
+
+        .action-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .account-summary {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 24px 16px;
+            }
+
+            .summary-card {
+                padding: 24px 20px;
+            }
+
+            .balance-overview {
+                grid-template-columns: 1fr;
+            }
+
+            .payments-table-container {
+                overflow-x: auto;
+            }
+
+            .payments-table {
+                min-width: 700px;
+            }
+
+            .table-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: stretch;
+            }
+
+            .filter-controls {
+                justify-content: center;
+            }
+
+            .header-content {
+                padding: 0 16px;
+            }
+
+            .nav-content {
+                padding: 0 16px;
+                overflow-x: auto;
+            }
+
+            .user-info span {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="user-header">
-        <h2>Polix Insurance - Estado de Cuenta</h2>
-        <nav class="user-nav">
-            <a href="informacionSeguro.html">Mi Seguro</a>
-            <a href="estadoCuenta.html">Estado de Cuenta</a>
-            <a href="historial.html">Historial</a>
-            <a href="../index.html">Cerrar Sesión</a>
-        </nav>
+        <div class="header-content">
+            <div class="header-left">
+                <img src="../css/images/Logo.avif" alt="Polix Insurance Logo" class="logo-user">
+                <div class="header-title">
+                    <h1>Mi Portal de Seguros</h1>
+                    <p>Gestiona tu póliza</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <div class="user-avatar">MG</div>
+                    <span>María González</span>
+                </div>
+                <a href="../index.html" class="logout-btn">Cerrar Sesión</a>
+            </div>
+        </div>
     </header>
 
-    <div class="payment-grid">
-        <div>
-            <table class="payment-table">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Concepto</th>
-                        <th>Monto</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>15/03/2023</td>
-                        <td>Pago inicial</td>
-                        <td>$1,200.00</td>
-                        <td class="status-paid">Pagado</td>
-                        <td><button>Factura</button></td>
-                    </tr>
-                    <tr>
-                        <td>15/09/2023</td>
-                        <td>Segunda cuota</td>
-                        <td>$1,200.00</td>
-                        <td class="status-pending">Pendiente</td>
-                        <td><button>Pagar</button></td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <div class="nav-content">
+            <a href="informacionSeguro.html" class="nav-tab">Mi Seguro</a>
+            <a href="estadoCuenta.html" class="nav-tab active">Estado de Cuenta</a>
+            <a href="historial.html" class="nav-tab">Historial</a>
         </div>
-        
-        <div class="payment-summary">
-            <h3>Resumen de Pagos</h3>
-            <div class="chart-circle">
-                75%
-            </div>
-            <p style="text-align: center;">Porcentaje pagado</p>
-            
-            <div style="margin-top: 30px;">
-                <p><strong>Total pagado:</strong> $1,200.00</p>
-                <p><strong>Saldo pendiente:</strong> $1,200.00</p>
-                <p><strong>Próximo vencimiento:</strong> 15/09/2023</p>
-            </div>
-            
-            <button class="payment-btn">Realizar Pago en Línea</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-title">
+            <h2>Estado de Cuenta</h2>
+            <p>Historial de pagos y estado financiero de tu póliza</p>
         </div>
-    </div>
+
+        <!-- Account Summary -->
+        <div class="account-summary">
+            <div class="summary-card">
+                <div class="summary-header">
+                    <div class="summary-title">Resumen de Pagos</div>
+                    <div class="summary-subtitle">Póliza POL-2024-001 - Año 2024</div>
+                </div>
+                
+                <div class="balance-overview">
+                    <div class="balance-item">
+                        <div class="balance-label">Total Pagado</div>
+                        <div class="balance-amount paid">$935.00</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-label">Pendiente</div>
+                        <div class="balance-amount pending">$85.00</div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; padding: 16px; background: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">
+                    <div style="color: #166534; font-weight: 600; margin-bottom: 4px;">Estado de Cuenta</div>
+                    <div style="color: #166534; font-size: 14px;">Al corriente - Próximo pago: 15 Feb 2025</div>
+                </div>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-header">
+                    <div class="summary-title">Progreso de Pagos</div>
+                    <div class="summary-subtitle">Año actual</div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="payment-chart">
+                        <div class="donut-chart">
+                            <div class="chart-center">
+                                <div class="chart-percentage">92%</div>
+                                <div class="chart-label">Completado</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color paid"></div>
+                            <span>Pagado (92%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color pending"></div>
+                            <span>Pendiente (8%)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments Table -->
+        <div class="payments-section">
+            <div class="table-header">
+                <div class="table-title">Historial de Pagos</div>
+                <div class="filter-controls">
+                    <select class="filter-select">
+                        <option>Todos los pagos</option>
+                        <option>Últimos 3 meses</option>
+                        <option>Último año</option>
+                    </select>
+                    <select class="filter-select">
+                        <option>Todos los estados</option>
+                        <option>Pagados</option>
+                        <option>Pendientes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="payments-table-container">
+                <table class="payments-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha Vencimiento</th>
+                            <th>Período</th>
+                            <th>Monto</th>
+                            <th>Estado</th>
+                            <th>Fecha Pago</th>
+                            <th>Método</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>15/02/2025</td>
+                            <td>Feb 2025</td>
+                            <td style="font-weight: 700;">$85.00</td>
+                            <td><span class="status-badge pending">Pendiente</span></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>
+                                <div class="payment-actions">
+                                    <button class="action-btn pay">Pagar</button>
+                                    <button class="action-btn download">Factura</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>15/01/2025</td>
+                            <td>Ene 2025</td>
+                            <td style="font-weight: 700;">$85.00</td>
+                            <td><span class="status-badge paid">Pagado</span></td>
+                            <td>12/01/2025</td>
+                            <td>Tarjeta •••• 4532</td>
+                            <td>
+                                <div class="payment-actions">
+                                    <button class="action-btn download">Recibo</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>15/09/2024</td>
+                            <td>Sep 2024</td>
+                            <td style="font-weight: 700;">$85.00</td>
+                            <td><span class="status-badge paid">Pagado</span></td>
+                            <td>14/09/2024</td>
+                            <td>Tarjeta •••• 4532</td>
+                            <td>
+                                <div class="payment-actions">
+                                    <button class="action-btn download">Recibo</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="actions-title">Acciones Rápidas</div>
+            <div class="action-buttons">
+                <button class="quick-action-btn primary">
+                    <div class="action-icon">💳</div>
+                    <span>Pagar Ahora</span>
+                </button>
+                
+                <button class="quick-action-btn">
+                    <div class="action-icon">🔄</div>
+                    <span>Configurar Pago Automático</span>
+                </button>
+                
+                <button class="quick-action-btn">
+                    <div class="action-icon">📄</div>
+                    <span>Descargar Estado de Cuenta</span>
+                </button>
+                
+                <button class="quick-action-btn">
+                    <div class="action-icon">💰</div>
+                    <span>Historial de Facturas</span>
+                </button>
+                
+                <button class="quick-action-btn">
+                    <div class="action-icon">🏦</div>
+                    <span>Cambiar Método de Pago</span>
+                </button>
+                
+                <button class="quick-action-btn">
+                    <div class="action-icon">📧</div>
+                    <span>Configurar Recordatorios</span>
+                </button>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

@@ -3,90 +3,704 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Seguro</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Mi Seguro - Polix Insurance</title>
+    <link rel="stylesheet" href="../css/style.css">
     <style>
+        body {
+            background: url('../css/images/SeguroFondo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            display: block;
+            align-items: unset;
+            justify-content: unset;
+            min-height: 100vh;
+        }
+
+        body::before {
+            background-color: rgba(255, 255, 255, 0.92);
+        }
+
+        /* Header */
         .user-header {
-            background: #4299e1;
-            color: white;
-            padding: 1rem;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 16px 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .user-nav a {
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-user {
+            max-width: 40px;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .header-title h1 {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .header-title p {
+            color: #64748b;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: #6366F1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            margin: 0 10px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: #64748b;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
             text-decoration: none;
         }
-        .info-card {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        .logout-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
         }
-        .policy-status {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-weight: bold;
+
+        /* Navigation */
+        .nav-tabs {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 0 24px;
         }
-        .status-active { background: #c6f6d5; color: #22543d; }
-        .coverage-list {
-            margin: 15px 0;
-            padding-left: 20px;
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
         }
-        .download-btn {
-            background: #4299e1;
+
+        .nav-tab {
+            padding: 16px 24px;
+            text-decoration: none;
+            color: #64748b;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab.active {
+            color: #6366F1;
+            border-bottom-color: #6366F1;
+        }
+
+        .nav-tab:hover {
+            color: #6366F1;
+            background: #f8fafc;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .page-title {
+            margin-bottom: 32px;
+        }
+
+        .page-title h2 {
+            color: #1e293b;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-icon {
+            background: #f59e0b;
             color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            margin-top: 10px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            color: #92400e;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .alert-message {
+            color: #92400e;
+            font-size: 14px;
+        }
+
+        /* Policy Card */
+        .policy-overview {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .policy-overview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+        }
+
+        .policy-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .policy-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .policy-type {
+            background: #6366F1;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .policy-number {
+            color: #1e293b;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .policy-holder {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .policy-status {
+            text-align: right;
+        }
+
+        .status-badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .status-date {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        /* Policy Details Grid */
+        .policy-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .detail-card {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .detail-title {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .detail-value {
+            color: #1e293b;
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .detail-subtitle {
+            color: #64748b;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* Coverage Section */
+        .coverage-section {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            color: #1e293b;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .coverage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .coverage-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .coverage-icon {
+            background: #10B981;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .coverage-content {
+            flex: 1;
+        }
+
+        .coverage-name {
+            color: #1e293b;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .coverage-description {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .coverage-amount {
+            color: #6366F1;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* Action Buttons */
+        .actions-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            background: #ffffff;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1e293b;
+            font-weight: 600;
+            transition: all 0.2s ease;
             cursor: pointer;
         }
-        .warning-banner {
-            background: #fffaf0;
-            border-left: 4px solid #ed8936;
-            padding: 15px;
-            margin: 20px;
+
+        .action-btn:hover {
+            border-color: #6366F1;
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+
+        .action-btn.primary {
+            background: #6366F1;
+            border-color: #6366F1;
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+        }
+
+        .action-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 24px 16px;
+            }
+
+            .policy-overview {
+                padding: 24px 20px;
+            }
+
+            .policy-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .policy-status {
+                text-align: left;
+            }
+
+            .policy-details {
+                grid-template-columns: 1fr;
+            }
+
+            .coverage-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions-section {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                padding: 0 16px;
+            }
+
+            .nav-content {
+                padding: 0 16px;
+                overflow-x: auto;
+            }
+
+            .user-info span {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header class="user-header">
-        <h2>Polix Insurance - Mi Seguro</h2>
-        <nav class="user-nav">
-            <a href="informacionSeguro.html">Mi Seguro</a>
-            <a href="estadoCuenta.html">Estado de Cuenta</a>
-            <a href="historial.html">Historial</a>
-            <a href="../index.html">Cerrar Sesión</a>
-        </nav>
+        <div class="header-content">
+            <div class="header-left">
+                <img src="../css/images/Logo.avif" alt="Polix Insurance Logo" class="logo-user">
+                <div class="header-title">
+                    <h1>Mi Portal de Seguros</h1>
+                    <p>Gestiona tu póliza</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <div class="user-avatar">MG</div>
+                    <span>María González</span>
+                </div>
+                <a href="../index.html" class="logout-btn">Cerrar Sesión</a>
+            </div>
+        </div>
     </header>
 
-    <div class="info-card">
-        <h2>Información de tu Póliza</h2>
-        <p><strong>Tipo de Póliza:</strong> Seguro Médico Premium</p>
-        <p><strong>Número de Póliza:</strong> POL-2023-001</p>
-        <p><strong>Estado:</strong> <span class="policy-status status-active">Activo</span></p>
-        <p><strong>Fecha de Inicio:</strong> 15/03/2023</p>
-        <p><strong>Fecha de Vencimiento:</strong> 15/03/2024</p>
-        
-        <h3 style="margin-top: 20px;">Coberturas Incluidas:</h3>
-        <ul class="coverage-list">
-            <li>Consultas médicas ilimitadas</li>
-            <li>Hospitalización hasta $15,000</li>
-            <li>Medicamentos con copago del 20%</li>
-            <li>Emergencias 24/7</li>
-        </ul>
-        
-        <button class="download-btn">Descargar Póliza en PDF</button>
-    </div>
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <div class="nav-content">
+            <a href="informacionSeguro.html" class="nav-tab active">Mi Seguro</a>
+            <a href="estadoCuenta.html" class="nav-tab">Estado de Cuenta</a>
+            <a href="historial.html" class="nav-tab">Historial</a>
+        </div>
+    </nav>
 
-    <div class="warning-banner">
-        <h3>¡Atención!</h3>
-        <p>Tu póliza vencerá en 45 días. Contacta a tu asesor para renovarla.</p>
-    </div>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-title">
+            <h2>Información de mi Seguro</h2>
+            <p>Detalles de tu póliza y coberturas incluidas</p>
+        </div>
+
+        <!-- Alert Banner -->
+        <div class="alert-banner">
+            <div class="alert-icon">⚠</div>
+            <div class="alert-content">
+                <div class="alert-title">Renovación Próxima</div>
+                <div class="alert-message">Tu póliza vence el 15 de marzo de 2025. Renueva antes del vencimiento para mantener tu cobertura activa.</div>
+            </div>
+        </div>
+
+        <!-- Policy Overview -->
+        <div class="policy-overview">
+            <div class="policy-header">
+                <div class="policy-info">
+                    <div class="policy-type">Seguro de Vida Premium</div>
+                    <div class="policy-number">POL-2024-001</div>
+                    <div class="policy-holder">Titular: María González Rodríguez</div>
+                </div>
+                <div class="policy-status">
+                    <div class="status-badge">Activo</div>
+                    <div class="status-date">Vigente hasta: 15/03/2025</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Policy Details -->
+        <div class="policy-details">
+            <div class="detail-card">
+                <div class="detail-title">Fecha de Inicio</div>
+                <div class="detail-value">15 Marzo 2024</div>
+                <div class="detail-subtitle">Hace 11 meses</div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-title">Fecha de Vencimiento</div>
+                <div class="detail-value">15 Marzo 2025</div>
+                <div class="detail-subtitle">En 1 mes</div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-title">Prima Mensual</div>
+                <div class="detail-value">$85.00</div>
+                <div class="detail-subtitle">Pago automático activo</div>
+            </div>
+            <div class="detail-card">
+                <div class="detail-title">Cobertura Total</div>
+                <div class="detail-value">$500,000</div>
+                <div class="detail-subtitle">Suma asegurada</div>
+            </div>
+        </div>
+
+        <!-- Coverage Section -->
+        <div class="coverage-section">
+            <div class="section-title">
+                🛡️ Coberturas Incluidas
+            </div>
+            <div class="coverage-grid">
+                <div class="coverage-item">
+                    <div class="coverage-icon">✓</div>
+                    <div class="coverage-content">
+                        <div class="coverage-name">Muerte por Accidente</div>
+                        <div class="coverage-description">Cobertura completa en caso de fallecimiento por accidente</div>
+                        <div class="coverage-amount">Hasta $500,000</div>
+                    </div>
+                </div>
+                
+                <div class="coverage-item">
+                    <div class="coverage-icon">✓</div>
+                    <div class="coverage-content">
+                        <div class="coverage-name">Muerte por Enfermedad</div>
+                        <div class="coverage-description">Protección por muerte natural o por enfermedad</div>
+                        <div class="coverage-amount">Hasta $500,000</div>
+                    </div>
+                </div>
+                
+                <div class="coverage-item">
+                    <div class="coverage-icon">✓</div>
+                    <div class="coverage-content">
+                        <div class="coverage-name">Incapacidad Permanente</div>
+                        <div class="coverage-description">Compensación por incapacidad total y permanente</div>
+                        <div class="coverage-amount">Hasta $250,000</div>
+                    </div>
+                </div>
+                
+                <div class="coverage-item">
+                    <div class="coverage-icon">✓</div>
+                    <div class="coverage-content">
+                        <div class="coverage-name">Gastos Funerarios</div>
+                        <div class="coverage-description">Cobertura de gastos de sepelio y funeral</div>
+                        <div class="coverage-amount">Hasta $15,000</div>
+                    </div>
+                </div>
+                
+                <div class="coverage-item">
+                    <div class="coverage-icon">✓</div>
+                    <div class="coverage-content">
+                        <div class="coverage-name">Asistencia Médica</div>
+                        <div class="coverage-description">Servicios médicos de emergencia 24/7</div>
+                        <div class="coverage-amount">Sin límite</div>
+                    </div>
+                </div>
+                
+                <div class="coverage-item">
+                    <div class="coverage-icon">✓</div>
+                    <div class="coverage-content">
+                        <div class="coverage-name">Asesoría Legal</div>
+                        <div class="coverage-description">Consultoría legal gratuita para beneficiarios</div>
+                        <div class="coverage-amount">Incluido</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions Section -->
+        <div class="coverage-section">
+            <div class="section-title">
+                ⚡ Acciones Rápidas
+            </div>
+            <div class="actions-section">
+                <button class="action-btn primary">
+                    <div class="action-icon">📄</div>
+                    <span>Descargar Póliza PDF</span>
+                </button>
+                
+                <a href="estadoCuenta.html" class="action-btn">
+                    <div class="action-icon">💳</div>
+                    <span>Ver Estado de Cuenta</span>
+                </a>
+                
+                <a href="historial.html" class="action-btn">
+                    <div class="action-icon">📋</div>
+                    <span>Hacer Reclamo</span>
+                </a>
+                
+                <button class="action-btn">
+                    <div class="action-icon">🔄</div>
+                    <span>Renovar Póliza</span>
+                </button>
+                
+                <button class="action-btn">
+                    <div class="action-icon">📞</div>
+                    <span>Contactar Agente</span>
+                </button>
+                
+                <button class="action-btn">
+                    <div class="action-icon">📧</div>
+                    <span>Actualizar Datos</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="coverage-section">
+            <div class="section-title">
+                ℹ️ Información Adicional
+            </div>
+            <div style="display: grid; gap: 16px;">
+                <div style="padding: 16px; background: #f1f5f9; border-radius: 8px; border-left: 4px solid #6366F1;">
+                    <div style="font-weight: 600; color: #1e293b; margin-bottom: 4px;">Agente Asignado</div>
+                    <div style="color: #64748b; font-size: 14px;">Carlos Mendoza - Teléfono: (809) 555-0123</div>
+                    <div style="color: #64748b; font-size: 14px;">Email: carlos.mendoza@polixinsurance.com</div>
+                </div>
+                
+                <div style="padding: 16px; background: #f1f5f9; border-radius: 8px; border-left: 4px solid #10B981;">
+                    <div style="font-weight: 600; color: #1e293b; margin-bottom: 4px;">Beneficiarios</div>
+                    <div style="color: #64748b; font-size: 14px;">1. Juan González Martínez (50%)</div>
+                    <div style="color: #64748b; font-size: 14px;">2. Ana González Martínez (50%)</div>
+                </div>
+                
+                <div style="padding: 16px; background: #f1f5f9; border-radius: 8px; border-left: 4px solid #F59E0B;">
+                    <div style="font-weight: 600; color: #1e293b; margin-bottom: 4px;">Recordatorios Importantes</div>
+                    <div style="color: #64748b; font-size: 14px;">• Notificar cambios de dirección o datos personales</div>
+                    <div style="color: #64748b; font-size: 14px;">• Mantener pagos al día para conservar la cobertura</div>
+                    <div style="color: #64748b; font-size: 14px;">• Revisar beneficiarios anualmente</div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
